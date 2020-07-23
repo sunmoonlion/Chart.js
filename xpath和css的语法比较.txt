@@ -1,0 +1,26 @@
+selenium的driver有多种查找element的方法，如：find_element_by_id方法
+document也有多种查找element的方法，如find_element_by_id方法
+注意：selenium的driver对象和document对象的查找element方法很多相同，但也有不同的地方，例如，driver对象有find_element_by_class_name方法，但document对象则没有
+
+Scrapy有自己的多种查找element的方法,但它不是find_element方法，而是.css或.xpath方法，特别注意的是，在Scrapy中，有多种对象有.css或.xpath方法，这些对象包括Selector对象，Selectlist对象，response对象，还有特殊的linkExtract对象，而且linkExtract对象查找element的方法也特殊：它不是.css或.xpath方法，而是extract_links方法，不过，它只能提取链接对象
+
+对于Scrapy的.css和.xpath方法，有如下不同：
+
+对于xpath：
+1.元素element前可省略‘/’（当然，有时也不省略）
+2.’.‘表示当前路径
+3.’//‘，则表示在相所有后代元素中查找，‘’/‘’则表示在子元素中查找
+4.xpath是定位节点的，而节点包括属性节点和文本节点，前者用@表示，后者用text（）表示，selecter.extrct提取的是文本节点的字符串
+
+css语法：
+1.元素element前省略的是’//‘
+2.E1>E2与xpath的E1/E2相同，E1 E2与xpath的E1//E2相同，E1，E2与xpath的E1|E2相同，
+3，属性定位符为[]与xpath的@相似，但[class='element']可以用.element表示，而[id='element']可以用用#element表示
+4.css主要定位元素节点，所以，其属性[]定位的也是包含属性的元素，但是element：：text表示的是元素element的文本，类似于xpath的element/text（），同样可以用.extract方法提取文本
+
+也就是说，对于Scrapy的selector对象，xpath用/text（）表示文本节点，其文本通过extract方法提取，而对于css方法来讲，：：text表示文本节点，其文本通过extract方法来提取
+
+最后，说明一下，driver对象和document对象，虽然有简便的find_element_by_id等方法，但是，对于复杂的元素的定位，还是要用万能的find_element_by_xpath方法，find_element_by_css次之。
+
+
+
